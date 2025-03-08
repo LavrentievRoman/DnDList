@@ -1,5 +1,7 @@
 package ui.screen
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+import ui.viewmodel.NewCharacterViewModel
 import androidx.compose.runtime.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -13,13 +15,92 @@ import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.example.dnd_characterlist.R
+import ui.viewmodel.ListofCharactersViewModel
 
 @Composable
-fun NewCharacterCreationScreen(navController: NavController) {
+fun NewCharacterCreationScreen(
+    navController: NavController,
+    viewModel: NewCharacterViewModel = viewModel(),
+    listViewModel: ListofCharactersViewModel = viewModel()
+) {
+    val characterName by viewModel.characterName.collectAsState()
+    val characterRace by viewModel.characterRace.collectAsState()
+    val characterExperience by viewModel.characterExperience.collectAsState()
+    val characterWorldview by viewModel.characterWorldview.collectAsState()
+
+
+    val strength by viewModel.strength.collectAsState()
+    val strengthModifier by viewModel.strengthModifier.collectAsState()
+
+    val dexterity by viewModel.dexterity.collectAsState()
+    val dexterityModifier by viewModel.dexterityModifier.collectAsState()
+
+    val endurance by viewModel.endurance.collectAsState()
+    val enduranceModifier by viewModel.enduranceModifier.collectAsState()
+
+    val intelligence by viewModel.intelligence.collectAsState()
+    val intelligenceModifier by viewModel.intelligenceModifier.collectAsState()
+
+    val wisdom by viewModel.wisdom.collectAsState()
+    val wisdomModifier by viewModel.wisdomModifier.collectAsState()
+
+    val charisma by viewModel.charisma.collectAsState()
+    val charismaModifier by viewModel.charismaModifier.collectAsState()
+
+
+    val acrobaticsChecked by viewModel.acrobaticsChecked.collectAsState()
+    val acrobaticsModifier by viewModel.acrobaticsModifier.collectAsState()
+
+    val stealthChecked by viewModel.stealthChecked.collectAsState()
+    val stealthModifier by viewModel.stealthModifier.collectAsState()
+
+    val analysisChecked by viewModel.analysisChecked.collectAsState()
+    val analysisModifier by viewModel.analysisModifier.collectAsState()
+
+    val historyChecked by viewModel.historyChecked.collectAsState()
+    val historyModifier by viewModel.historyModifier.collectAsState()
+
+    val attentivenessChecked by viewModel.attentivenessChecked.collectAsState()
+    val attentivenessModifier by viewModel.attentivenessModifier.collectAsState()
+
+    val medicineChecked by viewModel.medicineChecked.collectAsState()
+    val medicineModifier by viewModel.medicineModifier.collectAsState()
+
+    val deceptionChecked by viewModel.deceptionChecked.collectAsState()
+    val deceptionModifier by viewModel.deceptionModifier.collectAsState()
+
+    val convictionChecked by viewModel.convictionChecked.collectAsState()
+    val convictionModifier by viewModel.convictionModifier.collectAsState()
+
+
+    val otherAbilities by viewModel.otherAbilities.collectAsState()
+
+
+    val maxHp by viewModel.maxHp.collectAsState()
+    val currentHp by viewModel.currentHp.collectAsState()
+
+    val maxMp by viewModel.maxMp.collectAsState()
+    val currentMp by viewModel.currentMp.collectAsState()
+
+
+    val attacks by viewModel.attacks.collectAsState()
+
+
+    val inventoryItems by viewModel.inventoryItems.collectAsState()
+
+
+    val gold by viewModel.gold.collectAsState()
+    val silver by viewModel.silver.collectAsState()
+    val copper by viewModel.copper.collectAsState()
+
+
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -102,8 +183,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                     .padding(horizontal = 15.dp)
             ){ // Поле ввода "Имя персонажа"
                 BasicTextField(
-                    value = "Имя персонажа",
-                    onValueChange = { println("Text Changed") },
+                    value = characterName,
+                    onValueChange = { viewModel.updateCharacterName(it) },
                     textStyle = TextStyle(
                         color = Color(0xFFADADAD),
                         fontSize = 16.sp,
@@ -142,8 +223,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .padding(horizontal = 15.dp)
                     ){ // Поле ввода "Раса"
                         BasicTextField(
-                            value = "Раса",
-                            onValueChange = { println("Text Changed") },
+                            value = characterRace,
+                            onValueChange = { viewModel.updateCharacterRace(it) },
                             textStyle = TextStyle(
                                 color = Color(0xFFADADAD),
                                 fontSize = 16.sp,
@@ -172,8 +253,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .padding(horizontal = 15.dp)
                     ){ // Поле ввода "Мировоззренние"
                         BasicTextField(
-                            value = "Мировоззренние",
-                            onValueChange = { println("Text Changed") },
+                            value = characterWorldview,
+                            onValueChange = { viewModel.updateCharacterWorldview(it) },
                             textStyle = TextStyle(
                                 color = Color(0xFFADADAD),
                                 fontSize = 16.sp,
@@ -202,8 +283,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .padding(horizontal = 15.dp)
                     ){ // Поле ввода "Опыт"
                         BasicTextField(
-                            value = "Опыт",
-                            onValueChange = { println("Text Changed") },
+                            value = characterExperience,
+                            onValueChange = { viewModel.updateCharacterExperience(it) },
                             textStyle = TextStyle(
                                 color = Color(0xFFADADAD),
                                 fontSize = 16.sp,
@@ -294,8 +375,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 )
                         ){
                             BasicTextField(
-                                value = "10",
-                                onValueChange = { println("Text Changed") },
+                                value = strength,
+                                onValueChange = { viewModel.updateStrength(it) },
                                 textStyle = TextStyle(
                                     color = Color(0xFFADADAD),
                                     fontSize = 16.sp,
@@ -303,7 +384,7 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     textAlign = TextAlign.Center
                                 ),
                                 modifier = Modifier
-                                    .padding(vertical = 10.dp, horizontal = 13.dp)
+                                    .padding(vertical = 10.dp, horizontal = 8.dp)
                                     .width(35.dp)
                             )
                         }
@@ -311,14 +392,16 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(47.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = strengthModifier,
                                 color = Color(0xFF461209),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp)
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .padding(vertical = 8.dp, horizontal = 10.dp)
                             )
                         }
                     }
@@ -360,8 +443,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 )
                         ){
                             BasicTextField(
-                                value = "10",
-                                onValueChange = { println("Text Changed") },
+                                value = dexterity,
+                                onValueChange = { viewModel.updateDexterity(it) },
                                 textStyle = TextStyle(
                                     color = Color(0xFFADADAD),
                                     fontSize = 16.sp,
@@ -369,7 +452,7 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     textAlign = TextAlign.Center
                                 ),
                                 modifier = Modifier
-                                    .padding(vertical = 10.dp, horizontal = 13.dp)
+                                    .padding(vertical = 10.dp, horizontal = 8.dp)
                                     .width(35.dp)
                             )
                         }
@@ -377,13 +460,14 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(47.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = dexterityModifier,
                                 color = Color(0xFF461209),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp)
                             )
                         }
@@ -426,8 +510,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 )
                         ){
                             BasicTextField(
-                                value = "10",
-                                onValueChange = { println("Text Changed") },
+                                value = endurance,
+                                onValueChange = { viewModel.updateEndurance(it) },
                                 textStyle = TextStyle(
                                     color = Color(0xFFADADAD),
                                     fontSize = 16.sp,
@@ -435,23 +519,22 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     textAlign = TextAlign.Center
                                 ),
                                 modifier = Modifier
-                                    .padding(vertical = 10.dp, horizontal = 13.dp)
+                                    .padding(vertical = 10.dp, horizontal = 8.dp)
                                     .width(35.dp)
                             )
                         }
-                        Box( // Модификатор
+                        Surface( // Модификатор
+                            shape = RoundedCornerShape(10.dp),
+                            color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .clip(shape = RoundedCornerShape(10.dp))
-                                .background(
-                                    color = Color(0xFFFFD489),
-                                    shape = RoundedCornerShape(10.dp)
-                                )
+                                .width(47.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = enduranceModifier,
                                 color = Color(0xFF461209),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp)
                             )
                         }
@@ -494,8 +577,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 )
                         ){
                             BasicTextField(
-                                value = "10",
-                                onValueChange = { println("Text Changed") },
+                                value = intelligence,
+                                onValueChange = { viewModel.updateIntelligence(it) },
                                 textStyle = TextStyle(
                                     color = Color(0xFFADADAD),
                                     fontSize = 16.sp,
@@ -503,7 +586,7 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     textAlign = TextAlign.Center
                                 ),
                                 modifier = Modifier
-                                    .padding(vertical = 10.dp, horizontal = 13.dp)
+                                    .padding(vertical = 10.dp, horizontal = 8.dp)
                                     .width(35.dp)
                             )
                         }
@@ -511,13 +594,14 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(47.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = intelligenceModifier,
                                 color = Color(0xFF461209),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp)
                             )
                         }
@@ -560,8 +644,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 )
                         ){
                             BasicTextField(
-                                value = "10",
-                                onValueChange = { println("Text Changed") },
+                                value = wisdom,
+                                onValueChange = { viewModel.updateWisdom(it) },
                                 textStyle = TextStyle(
                                     color = Color(0xFFADADAD),
                                     fontSize = 16.sp,
@@ -569,7 +653,7 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     textAlign = TextAlign.Center
                                 ),
                                 modifier = Modifier
-                                    .padding(vertical = 10.dp, horizontal = 13.dp)
+                                    .padding(vertical = 10.dp, horizontal = 8.dp)
                                     .width(35.dp)
                             )
                         }
@@ -577,13 +661,14 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(47.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = wisdomModifier,
                                 color = Color(0xFF461209),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp)
                             )
                         }
@@ -626,8 +711,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 )
                         ){
                             BasicTextField(
-                                value = "10",
-                                onValueChange = { println("Text Changed") },
+                                value = charisma,
+                                onValueChange = { viewModel.updateCharisma(it) },
                                 textStyle = TextStyle(
                                     color = Color(0xFFADADAD),
                                     fontSize = 16.sp,
@@ -635,7 +720,7 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     textAlign = TextAlign.Center
                                 ),
                                 modifier = Modifier
-                                    .padding(vertical = 10.dp, horizontal = 13.dp)
+                                    .padding(vertical = 10.dp, horizontal = 8.dp)
                                     .width(35.dp)
                             )
                         }
@@ -643,13 +728,14 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(47.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = charismaModifier,
                                 color = Color(0xFF461209),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp)
                             )
                         }
@@ -685,8 +771,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .fillMaxWidth()
                     ){
                         Checkbox(
-                            checked = true,
-                            onCheckedChange = { println("CheckBox Changed") },
+                            checked = acrobaticsChecked,
+                            onCheckedChange = { viewModel.toggleAcrobatics(it) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF58180D),
                                 uncheckedColor = Color(0xFF58180D),
@@ -710,14 +796,15 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(39.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = acrobaticsModifier,
                                 color = Color(0xFF461209),
-                                fontSize = 16.sp,
+                                fontSize = 13.sp,
+                                textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
                             )
                         }
                     }
@@ -729,8 +816,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .fillMaxWidth()
                     ){
                         Checkbox(
-                            checked = true,
-                            onCheckedChange = { println("CheckBox Changed") },
+                            checked = stealthChecked,
+                            onCheckedChange = { viewModel.toggleStealth(it) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF58180D),
                                 uncheckedColor = Color(0xFF58180D),
@@ -754,14 +841,15 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(39.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = stealthModifier,
                                 color = Color(0xFF461209),
-                                fontSize = 16.sp,
+                                fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
                             )
                         }
                     }
@@ -773,8 +861,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .fillMaxWidth()
                     ){
                         Checkbox(
-                            checked = true,
-                            onCheckedChange = { println("CheckBox Changed") },
+                            checked = analysisChecked,
+                            onCheckedChange = { viewModel.toggleAnalysis(it) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF58180D),
                                 uncheckedColor = Color(0xFF58180D),
@@ -798,14 +886,15 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(39.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = analysisModifier,
                                 color = Color(0xFF461209),
-                                fontSize = 16.sp,
+                                fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
                             )
                         }
                     }
@@ -817,8 +906,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .fillMaxWidth()
                     ){
                         Checkbox(
-                            checked = true,
-                            onCheckedChange = { println("CheckBox Changed") },
+                            checked = historyChecked,
+                            onCheckedChange = { viewModel.toggleHistory(it) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF58180D),
                                 uncheckedColor = Color(0xFF58180D),
@@ -842,14 +931,15 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(39.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = historyModifier,
                                 color = Color(0xFF461209),
-                                fontSize = 16.sp,
+                                fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
                             )
                         }
                     }
@@ -861,8 +951,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .fillMaxWidth()
                     ){
                         Checkbox(
-                            checked = true,
-                            onCheckedChange = { println("CheckBox Changed") },
+                            checked = attentivenessChecked,
+                            onCheckedChange = { viewModel.toggleAttentiveness(it) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF58180D),
                                 uncheckedColor = Color(0xFF58180D),
@@ -886,14 +976,15 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(39.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = attentivenessModifier,
                                 color = Color(0xFF461209),
-                                fontSize = 16.sp,
+                                fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
                             )
                         }
                     }
@@ -905,8 +996,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .fillMaxWidth()
                     ){
                         Checkbox(
-                            checked = true,
-                            onCheckedChange = { println("CheckBox Changed") },
+                            checked = medicineChecked,
+                            onCheckedChange = { viewModel.toggleMedicine(it) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF58180D),
                                 uncheckedColor = Color(0xFF58180D),
@@ -930,14 +1021,15 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(39.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = medicineModifier,
                                 color = Color(0xFF461209),
-                                fontSize = 16.sp,
+                                fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
                             )
                         }
                     }
@@ -949,8 +1041,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .fillMaxWidth()
                     ){
                         Checkbox(
-                            checked = true,
-                            onCheckedChange = { println("CheckBox Changed") },
+                            checked = deceptionChecked,
+                            onCheckedChange = { viewModel.toggleDeception(it) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF58180D),
                                 uncheckedColor = Color(0xFF58180D),
@@ -974,14 +1066,15 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(39.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = deceptionModifier,
                                 color = Color(0xFF461209),
-                                fontSize = 16.sp,
+                                fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
                             )
                         }
                     }
@@ -993,8 +1086,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .fillMaxWidth()
                     ){
                         Checkbox(
-                            checked = true,
-                            onCheckedChange = { println("CheckBox Changed") },
+                            checked = convictionChecked,
+                            onCheckedChange = { viewModel.toggleConviction(it) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF58180D),
                                 uncheckedColor = Color(0xFF58180D),
@@ -1018,14 +1111,15 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp),
                             color = Color(0xFFFFD489),
                             modifier = Modifier
-                                .wrapContentSize()
+                                .width(39.dp)
                         ){
                             Text(
-                                text = "+1",
+                                text = convictionModifier,
                                 color = Color(0xFF461209),
-                                fontSize = 16.sp,
+                                fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
                             )
                         }
                     }
@@ -1068,8 +1162,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                         )
                 ){
                     BasicTextField(
-                        value = "Дополнительные способности",
-                        onValueChange = { println("Text Changed") },
+                        value = otherAbilities,
+                        onValueChange = { viewModel.updateOtherAbilities(it) },
                         textStyle = TextStyle(
                             color = Color(0xFFADADAD),
                             fontSize = 14.sp,
@@ -1154,8 +1248,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 )
                         ){
                             BasicTextField(
-                                value = "100",
-                                onValueChange = { println("Text Changed") },
+                                value = currentHp,
+                                onValueChange = { viewModel.updateCurrentHp(it) },
                                 textStyle = TextStyle(
                                     color = Color(0xFFADADAD),
                                     fontSize = 16.sp,
@@ -1181,13 +1275,13 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 .wrapContentSize()
                         ){
                             Text(
-                                text = "100",
+                                text = maxHp,
                                 color = Color(0xFF461209),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .padding(vertical = 10.dp)
-                                    .padding(start = 20.dp)
                                     .width(80.dp)
                             )
                         }
@@ -1255,8 +1349,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 )
                         ){
                             BasicTextField(
-                                value = "100",
-                                onValueChange = { println("Text Changed") },
+                                value = currentMp,
+                                onValueChange = { viewModel.updateCurrentMp(it) },
                                 textStyle = TextStyle(
                                     color = Color(0xFFADADAD),
                                     fontSize = 16.sp,
@@ -1282,13 +1376,13 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                 .wrapContentSize()
                         ){
                             Text(
-                                text = "100",
+                                text = maxMp,
                                 color = Color(0xFF461209),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .padding(vertical = 10.dp)
-                                    .padding(start = 23.dp)
                                     .width(80.dp)
                             )
                         }
@@ -1368,306 +1462,108 @@ fun NewCharacterCreationScreen(navController: NavController) {
                         )
                     }
 
-                    // 1 строка
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(horizontal = 2.dp)
-                            .clip(shape = RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .background(
-                                color = Color(0xFFFADFB0),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .padding(vertical = 5.dp, horizontal = 8.dp)
-                    ){
-                        Box( // Поле ввода названия
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(220.dp)
-                        ){
-                            BasicTextField(
-                                value = "Атака",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Start
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                            )
-                        }
-                        Box( // Поле ввода бонуса
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(50.dp)
-                        ){
-                            BasicTextField(
-                                value = "+0",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
-                        }
-                        Box( // Поле ввода Урона
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(90.dp)
-                        ){
-                            BasicTextField(
-                                value = "d4+3",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
-                        }
-                    }
+                    // Строки
+                    attacks.forEachIndexed { index, attack ->
+                        val rowColor = if (index % 2 == 0) Color(0xFFFADFB0) else Color(0xFFFFD489)
 
-                    // 2 строка
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(horizontal = 2.dp)
-                            .clip(shape = RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .background(
-                                color = Color(0xFFFFD489),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .padding(vertical = 5.dp, horizontal = 8.dp)
-                    ){
-                        Box( // Поле ввода названия
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
+                                .padding(horizontal = 2.dp)
                                 .clip(shape = RoundedCornerShape(8.dp))
+                                .fillMaxWidth()
                                 .background(
-                                    color = Color(0xFFFFFFFF),
+                                    color = rowColor,
                                     shape = RoundedCornerShape(8.dp)
                                 )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(220.dp)
+                                .padding(vertical = 5.dp, horizontal = 8.dp)
                         ){
-                            BasicTextField(
-                                value = "Атака",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Start
-                                ),
+                            Box( // Поле ввода названия
                                 modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                            )
-                        }
-                        Box( // Поле ввода бонуса
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
+                                    .clip(shape = RoundedCornerShape(8.dp))
+                                    .background(
+                                        color = Color(0xFFFFFFFF),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color(0xFFCABA98),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .width(220.dp)
+                            ){
+                                BasicTextField(
+                                    value = attack.name,
+                                    onValueChange = { viewModel.updateAttack(index, name = it) },
+                                    textStyle = TextStyle(
+                                        color = Color(0xFFADADAD),
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.Start
+                                    ),
+                                    modifier = Modifier
+                                        .padding(vertical = 7.dp)
+                                        .padding(start = 5.dp, end = 5.dp)
                                 )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(50.dp)
-                        ){
-                            BasicTextField(
-                                value = "+0",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
+                            }
+                            Box( // Поле ввода бонуса
                                 modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
-                        }
-                        Box( // Поле ввода Урона
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
+                                    .clip(shape = RoundedCornerShape(8.dp))
+                                    .background(
+                                        color = Color(0xFFFFFFFF),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color(0xFFCABA98),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .width(50.dp)
+                            ){
+                                BasicTextField(
+                                    value = attack.bonus,
+                                    onValueChange = { viewModel.updateAttack(index, bonus = it) },
+                                    textStyle = TextStyle(
+                                        color = Color(0xFFADADAD),
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.End
+                                    ),
+                                    modifier = Modifier
+                                        .padding(vertical = 7.dp)
+                                        .padding(start = 5.dp, end = 5.dp)
+                                        .align(Alignment.CenterEnd)
                                 )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(90.dp)
-                        ){
-                            BasicTextField(
-                                value = "d4+3",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
+                            }
+                            Box( // Поле ввода Урона
                                 modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
-                        }
-                    }
-
-                    // 3 строка
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(horizontal = 2.dp)
-                            .clip(shape = RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .background(
-                                color = Color(0xFFFADFB0),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .padding(vertical = 5.dp, horizontal = 8.dp)
-                    ){
-                        Box( // Поле ввода названия
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
+                                    .clip(shape = RoundedCornerShape(8.dp))
+                                    .background(
+                                        color = Color(0xFFFFFFFF),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color(0xFFCABA98),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .width(90.dp)
+                            ){
+                                BasicTextField(
+                                    value = attack.damage,
+                                    onValueChange = { viewModel.updateAttack(index, damage = it) },
+                                    textStyle = TextStyle(
+                                        color = Color(0xFFADADAD),
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.End
+                                    ),
+                                    modifier = Modifier
+                                        .padding(vertical = 7.dp)
+                                        .padding(start = 5.dp, end = 5.dp)
+                                        .align(Alignment.CenterEnd)
                                 )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(220.dp)
-                        ){
-                            BasicTextField(
-                                value = "Атака",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Start
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                            )
-                        }
-                        Box( // Поле ввода бонуса
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(50.dp)
-                        ){
-                            BasicTextField(
-                                value = "+0",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
-                        }
-                        Box( // Поле ввода Урона
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(90.dp)
-                        ){
-                            BasicTextField(
-                                value = "d4+3",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
+                            }
                         }
                     }
 
@@ -1679,7 +1575,7 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .height(25.dp)
                     ){
                         OutlinedButton(
-                            onClick = { println("Pressed!") },
+                            onClick = { viewModel.addAttack() },
                             border = BorderStroke(0.dp, Color.Transparent),
                             colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
                             modifier = Modifier
@@ -1762,219 +1658,79 @@ fun NewCharacterCreationScreen(navController: NavController) {
                         )
                     }
 
-                    // 1 строка
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(horizontal = 2.dp)
-                            .clip(shape = RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .background(
-                                color = Color(0xFFFADFB0),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .padding(vertical = 5.dp, horizontal = 8.dp)
-                    ){
-                        Box( // Поле ввода названия
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(270.dp)
-                        ){
-                            BasicTextField(
-                                value = "Предмет",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Start
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                            )
-                        }
-                        Box( // Поле ввода количества
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(90.dp)
-                        ){
-                            BasicTextField(
-                                value = "1",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
-                        }
-                    }
+                    inventoryItems.forEachIndexed { index, item ->
+                        val rowColor = if (index % 2 == 0) Color(0xFFFADFB0) else Color(0xFFFFD489)
 
-                    // 2 строка
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(horizontal = 2.dp)
-                            .clip(shape = RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .background(
-                                color = Color(0xFFFFD489),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .padding(vertical = 5.dp, horizontal = 8.dp)
-                    ){
-                        Box( // Поле ввода названия
+                        // 1 строка
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
+                                .padding(horizontal = 2.dp)
                                 .clip(shape = RoundedCornerShape(8.dp))
+                                .fillMaxWidth()
                                 .background(
-                                    color = Color(0xFFFFFFFF),
+                                    color = rowColor,
                                     shape = RoundedCornerShape(8.dp)
                                 )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(270.dp)
+                                .padding(vertical = 5.dp, horizontal = 8.dp)
                         ){
-                            BasicTextField(
-                                value = "Предмет",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Start
-                                ),
+                            Box( // Поле ввода названия
                                 modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                            )
-                        }
-                        Box( // Поле ввода количества
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
+                                    .clip(shape = RoundedCornerShape(8.dp))
+                                    .background(
+                                        color = Color(0xFFFFFFFF),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color(0xFFCABA98),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .width(270.dp)
+                            ){
+                                BasicTextField(
+                                    value = item.name,
+                                    onValueChange = { viewModel.updateInventoryItem(index, name = it) },
+                                    textStyle = TextStyle(
+                                        color = Color(0xFFADADAD),
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.Start
+                                    ),
+                                    modifier = Modifier
+                                        .padding(vertical = 7.dp)
+                                        .padding(start = 5.dp, end = 5.dp)
                                 )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(90.dp)
-                        ){
-                            BasicTextField(
-                                value = "1",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
+                            }
+                            Box( // Поле ввода количества
                                 modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
-                        }
-                    }
-
-                    // 3 строка
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(horizontal = 2.dp)
-                            .clip(shape = RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .background(
-                                color = Color(0xFFFADFB0),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .padding(vertical = 5.dp, horizontal = 8.dp)
-                    ){
-                        Box( // Поле ввода названия
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
+                                    .clip(shape = RoundedCornerShape(8.dp))
+                                    .background(
+                                        color = Color(0xFFFFFFFF),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color(0xFFCABA98),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .width(90.dp)
+                            ){
+                                BasicTextField(
+                                    value = item.count,
+                                    onValueChange = { viewModel.updateInventoryItem(index, count = it) },
+                                    textStyle = TextStyle(
+                                        color = Color(0xFFADADAD),
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.End
+                                    ),
+                                    modifier = Modifier
+                                        .padding(vertical = 7.dp)
+                                        .padding(start = 5.dp, end = 5.dp)
+                                        .align(Alignment.CenterEnd)
                                 )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(270.dp)
-                        ){
-                            BasicTextField(
-                                value = "Предмет",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Start
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                            )
-                        }
-                        Box( // Поле ввода количества
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .background(
-                                    color = Color(0xFFFFFFFF),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFCABA98),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .width(90.dp)
-                        ){
-                            BasicTextField(
-                                value = "1",
-                                onValueChange = { println("Text Changed") },
-                                textStyle = TextStyle(
-                                    color = Color(0xFFADADAD),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.End
-                                ),
-                                modifier = Modifier
-                                    .padding(vertical = 7.dp)
-                                    .padding(start = 5.dp, end = 5.dp)
-                                    .align(Alignment.CenterEnd)
-                            )
+                            }
                         }
                     }
 
@@ -1986,7 +1742,7 @@ fun NewCharacterCreationScreen(navController: NavController) {
                             .height(25.dp)
                     ){
                         OutlinedButton(
-                            onClick = { println("Pressed!") },
+                            onClick = { viewModel.addInventoryItem() },
                             border = BorderStroke(0.dp, Color.Transparent),
                             colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
                             modifier = Modifier
@@ -2053,8 +1809,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     )
                             ){
                                 BasicTextField(
-                                    value = "100",
-                                    onValueChange = { println("Text Changed") },
+                                    value = gold,
+                                    onValueChange = { viewModel.updateGold(it) },
                                     textStyle = TextStyle(
                                         color = Color(0xFFADADAD),
                                         fontSize = 16.sp,
@@ -2096,8 +1852,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     )
                             ){
                                 BasicTextField(
-                                    value = "100",
-                                    onValueChange = { println("Text Changed") },
+                                    value = silver,
+                                    onValueChange = { viewModel.updateSilver(it) },
                                     textStyle = TextStyle(
                                         color = Color(0xFFADADAD),
                                         fontSize = 16.sp,
@@ -2139,8 +1895,8 @@ fun NewCharacterCreationScreen(navController: NavController) {
                                     )
                             ){
                                 BasicTextField(
-                                    value = "100",
-                                    onValueChange = { println("Text Changed") },
+                                    value = copper,
+                                    onValueChange = { viewModel.updateCopper(it) },
                                     textStyle = TextStyle(
                                         color = Color(0xFFADADAD),
                                         fontSize = 16.sp,
@@ -2160,7 +1916,11 @@ fun NewCharacterCreationScreen(navController: NavController) {
 
         // Кнопка сохранить пероснажа
         OutlinedButton(
-            onClick = { println("Pressed!") },
+            onClick = {
+                val character = viewModel.getCharacter()
+                listViewModel.saveCharacter(context, character)
+                navController.navigate("List of Character")
+            },
             border = BorderStroke(0.dp, Color.Transparent),
             colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
             modifier = Modifier
